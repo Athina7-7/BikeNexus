@@ -213,7 +213,7 @@ def grafico_top_criticas(alertas):
     fig.update_layout(
         height=360, margin=dict(t=10, b=40, l=10, r=50),
         xaxis=dict(
-            title="⏱️ Minutos restantes para vaciarse / llenarse",
+            title="Minutos restantes para vaciarse / llenarse",
             gridcolor="rgba(148,163,184,0.15)", zeroline=False,
             title_font=dict(size=12, color="#94a3b8"),
         ),
@@ -253,20 +253,20 @@ def main():
     inyectar_css()
 
     st.markdown(
-        "<div class='titulo'>🚲 BikeNexus · Centro de Operaciones</div>"
+        "<div class='titulo'>BikeNexus · Centro de Operaciones</div>"
         "<div class='subtitulo'>Monitoreo en tiempo real de estaciones · Nueva York · "
-        "ordenado por urgencia (RF-07)</div>",
+        "ordenado por urgencia</div>",
         unsafe_allow_html=True,
     )
 
     with st.sidebar:
-        st.header("⚙️ Controles")
-        if st.button("🔄 Refrescar datos", use_container_width=True):
+        st.header("Controles")
+        if st.button("Refrescar datos", use_container_width=True):
             st.cache_data.clear()
         st.divider()
-        st.caption(f"📦 Tabla: `{TABLA}`")
-        st.caption(f"🌎 Región: `{REGION}`")
-        st.caption(f"🕒 {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        st.caption(f"Tabla: `{TABLA}`")
+        st.caption(f"Región: `{REGION}`")
+        st.caption(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
     try:
         df = cargar_datos()
@@ -357,12 +357,12 @@ def main():
                 "Min. restantes", format="%.1f", help="Minutos estimados para vaciarse/llenarse"),
             "Actualizada": st.column_config.TextColumn(
                 "Actualizada",
-                help="🟢 Al día = reportó hace menos de 2 min · ⚪ Sin reporte = dato posiblemente viejo (RNF-02)"),
+                help="🟢 Al día = reportó hace menos de 2 min · ⚪ Sin reporte = dato posiblemente viejo"),
         },
     )
     st.caption(
         f"Mostrando {len(alertas)} estaciones en alerta de {total} totales · "
-        f"🟢 Al día = dato reciente · ⚪ Sin reporte = sin datos hace >{UMBRAL_DESACTUALIZADA_MIN} min (RNF-02) · "
+        f"🟢 Al día = dato reciente · ⚪ Sin reporte = sin datos hace >{UMBRAL_DESACTUALIZADA_MIN} min · "
         f"actualizado {datetime.now().strftime('%H:%M:%S')}"
     )
 
