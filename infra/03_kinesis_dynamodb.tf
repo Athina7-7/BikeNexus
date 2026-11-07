@@ -1,30 +1,14 @@
 ###############################################################################
-# Kinesis Data Stream (streaming) + DynamoDB (estado operacional)
+# DynamoDB (estado operacional)
+#
+# NOTA IMPORTANTE (AWS Academy): el stream de KINESIS no se gestiona con Terraform.
+# El proveedor AWS llama automaticamente a IncreaseStreamRetentionPeriod al crear
+# el stream (para fijar 24h), y la SCP de Academy bloquea esa operacion (403), sin
+# forma de desactivarla desde el .tf. Por eso el stream se crea a mano con AWS CLI:
+#     aws kinesis create-stream --stream-name bikenexus-estaciones --shard-count 2
+# y el resto de la infra lo referencia por nombre via var.stream_name.
+# En una cuenta AWS estandar, aqui iria el recurso aws_kinesis_stream normal.
 ###############################################################################
-
-# -----------------------------------------------------------------------------
-# KINESIS: recibe los reportes de estado de estaciones (RF-01).
-#   2 shards cubren el pico de ~330 ev/s (RNF-01); retencion 24h (RNF-05).
-# -----------------------------------------------------------------------------
-resource "aws_kinesis_stream" "estaciones" {
-  name             = "${var.proyecto}-estaciones"
-  shard_count      = var.stream_shards
-  retention_period = var.stream_retencion_horas
-
-  shard_level_metrics = [
-    "IncomingRecords",
-    "OutgoingRecords",
-    "WriteProvisionedThroughputExceeded",
-  ]
-
-  stream_mode_details {
-    stream_mode = "PROVISIONED"
-  }
-
-  tags = {
-    Proyecto = var.proyecto
-  }
-}
 
 # -----------------------------------------------------------------------------
 # DYNAMODB: ultimo estado de cada estacion para el dashboard (RF-07, ADR-04).

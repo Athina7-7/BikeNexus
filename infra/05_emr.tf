@@ -10,8 +10,9 @@ resource "aws_emr_cluster" "spark" {
   release_label = var.emr_release
   applications  = ["Spark"]
 
-  # En AWS Academy se usan los roles predefinidos (no se crean roles nuevos).
-  service_role = var.lab_role_arn
+  # EMR necesita un rol de servicio con permisos EC2. El LabRole no los tiene,
+  # asi que usamos el rol de servicio estandar de EMR (configurable por variable).
+  service_role = var.emr_service_role
 
   ec2_attributes {
     instance_profile = var.lab_instance_profile
@@ -31,7 +32,7 @@ resource "aws_emr_cluster" "spark" {
   keep_job_flow_alive_when_no_steps = true
 
   # Loguear a S3 para depurar los jobs.
-  log_uri = "s3://${aws_s3_bucket.datalake.bucket}/emr-logs/"
+  log_uri = "s3://${var.data_bucket}/emr-logs/"
 
   tags = {
     Proyecto = var.proyecto
