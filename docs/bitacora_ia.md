@@ -28,25 +28,21 @@ pieza fue revisada y entendida por el equipo.
 
 ## Problemas técnicos resueltos durante el despliegue (documentados)
 
-Estos problemas reales se enfrentaron y resolvieron en AWS Academy. El equipo
-entiende cada causa y solución (útil para la defensa):
+Estos problemas reales se enfrentaron y resolvieron en AWS Academy:
 
-1. **SCP de Academy bloquea object-lock de S3** → Terraform no podía gestionar
+1. **SCP de Academy bloquea object-lock de S3:** Terraform no podía gestionar
    buckets. Solución: crear los buckets con AWS CLI y referenciarlos por variable.
-2. **Kinesis: IncreaseStreamRetentionPeriod bloqueado** → se quitó el valor
+2. **Kinesis - IncreaseStreamRetentionPeriod bloqueado:** se quitó el valor
    explícito (24h es el default, que es lo que exige RNF-05).
-3. **Runtime python3.11 no soportado por el proveedor AWS 4.67** → se usó python3.10.
-4. **EMR: LabRole sin permisos EC2** → se usaron los roles estándar EMR_DefaultRole / EMR_EC2_DefaultRole.
-5. **Conector Spark-Kinesis falla en EMR** → para la demo en vivo se usó un
+3. **Runtime python3.11 no soportado por el proveedor AWS 4.67:** se usó python3.10.
+4. **EMR - LabRole sin permisos EC2:** se usaron los roles estándar EMR_DefaultRole / EMR_EC2_DefaultRole.
+5. **Conector Spark-Kinesis falla en EMR:** para la demo en vivo se usó un
    consumidor con boto3 (misma lógica); el job Spark nativo queda en el repo
    (emr_pipeline_aws.py). El Spark batch (viajes→Gold) sí corre en EMR.
 
-## Qué NO delegó el equipo
+## Qué decidió el equipo
+La IA se usó para proponer alternativas, comparar opciones y mejorar la
+redacción, pero la decisión final y su justificación fueron del equipo:
 - Las decisiones de arquitectura (están en el E1, justificadas con ADRs).
 - La elección de tecnologías y sus garantías (CAP, entrega, modelo dimensional).
 - La interpretación de los requisitos de negocio.
-
-## Verificación de comprensión
-Cada integrante puede explicar: el flujo de datos extremo a extremo, por qué
-Kinesis y no Kafka, cómo se logra el efecto exactly-once en Silver, por qué
-DynamoDB es AP, y cómo el star schema responde las preguntas de negocio.
