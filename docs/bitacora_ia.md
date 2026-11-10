@@ -4,6 +4,13 @@
 > hizo el agente de IA y qué decidió el equipo. El equipo entiende y puede
 > defender todo el código entregado.
 
+**Estudiantes:**
+* Athina Alejandra Cappelleti García (aacappellg@eafit.edu.co)
+* David Alejandro Gutiérrez Leal (dagutierrl@eafit.edu.co)
+* Emmanuel Álvarez Castrillón (ealvarezc1@eafit.edu.co)
+* Ginna Alejandra Valencia Macuace (gavalencim@eafit.edu.co)
+* Mariamny Del Valle Ramírez Telles (mvramirezt@eafit.edu.co)
+
 ## Agente utilizado
 - **Kiro** (agente de IA en entorno web), usado de forma interactiva y guiada por el equipo.
 
